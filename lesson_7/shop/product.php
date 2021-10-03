@@ -1,12 +1,19 @@
 <?php
-include 'db.php';
+session_start();
+require 'db.php';
+$db = getDb();
 $id = (int)$_GET['id'];
-//$productEntity = mysqli_query($db, "SELECT * FROM products JOIN comments on products.id = comments.product_id where products.id = {$id}");
 $productEntity = mysqli_query($db, "SELECT * FROM products where products.id = {$id}");
 $feedbacks = mysqli_query($db, "SELECT * FROM comments where product_id = {$id}");
 $product = ($productEntity) ? mysqli_fetch_assoc($productEntity) : null;
 define('SRC', 'img/');
-
+$session_uid = session_id();
+if ($_GET['action'] == 'buy') {
+    $id = (int)$_GET['id'];
+    checkProductInCart($id, $session_uid, $db);
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    die();
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,6 +31,9 @@ define('SRC', 'img/');
 </head>
 <body>
 <div class="container">
+    <header>
+        <?php include 'templates/header.php' ?>
+    </header>
     <section class="top__">
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <ol class="carousel-indicators">
@@ -79,7 +89,7 @@ define('SRC', 'img/');
                     <p class="custom_prod_desc_price">$<?= $product['price'] ?></p>
                     <div class="delimeter"></div>
                     <div class="order__button">
-                        <a href="cart.html">
+                        <a href="?action=buy&id=<?= $product['id'] ?>">
                             <div class="add_to_card_block_prod_page">
                                 <svg class="cart_img" width="26" height="24" viewBox="0 0 32 29" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -93,13 +103,15 @@ define('SRC', 'img/');
                 </div>
                 <?php foreach ($feedbacks as $feedback) : ?>
                     <div class="feedback">
-                        <p><?=$feedback['name']?>: <span><?=$feedback['text']?></span></p>
+                        <p><?= $feedback['name'] ?>: <span><?= $feedback['text'] ?></span></p>
                     </div>
                 <?php endforeach; ?>
             </div>
-
         <?php endif; ?>
     </section>
+    <footer>
+        <?php include 'templates/footer.php' ?>
+    </footer>
 </div>
 </body>
 </html>
