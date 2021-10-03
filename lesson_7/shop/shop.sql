@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `prod_id` int(11) NOT NULL,
+  `quant` tinyint(128) unsigned NOT NULL DEFAULT '1',
+  `session_uid` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `prod_id_from_cart_idx` (`prod_id`),
+  CONSTRAINT `prod_id_from_cart` FOREIGN KEY (`prod_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart`
+--
+
+LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `comments`
 --
 
@@ -69,6 +96,14 @@ LOCK TABLES `products` WRITE;
 INSERT INTO `products` VALUES (1,'feature_1.png','Рубашка','Стильно, модно, молодежно!',123.22),(2,'feature_2.png','Штанцы','А может юбка',23.22),(3,'feature_3.png','Бриджи','Белый и стильные!',99.99),(4,'feature_4.png','Рубашка','В горошек, что может быть лучше!',123.44),(5,'feature_5.png','Пинджак','С карманами',223.22);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'store'
+--
+
+--
+-- Dumping routines for database 'store'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -79,4 +114,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-29 20:43:23
+-- Dump completed on 2021-10-03 13:14:26
