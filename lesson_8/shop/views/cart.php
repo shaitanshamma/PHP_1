@@ -1,30 +1,3 @@
-<?php
-session_start();
-require_once 'db.php';
-$db = getDb();
-$session_uid = session_id();
-$query = "select products.id, img, title, price, `description`, session_uid, quant 
-from products 
-join cart 
-on products.id = cart.prod_id 
-where cart.session_uid = '{$session_uid}'";
-$result = mysqli_query($db, $query);
-$total = "select sum(quant * price) as total from cart join products on products.id = cart.prod_id where session_uid ='{$session_uid}'; ";
-$totalRes = mysqli_query($db, $total);
-$sum = mysqli_fetch_assoc($totalRes);
-define('SRC', 'img/');
-
-if ($_GET['action'] == 'delete') {
-    $id = (int)$_GET['id'];
-    mysqli_query($db, "DELETE FROM `cart` WHERE prod_id = '{$id}' and session_uid ='{$session_uid}'");
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-    die();
-} else if ($_GET['action'] == 'clear') {
-    mysqli_query($db, "DELETE FROM `cart` WHERE session_uid = '{$session_uid}'");
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-    die();
-}
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -86,28 +59,30 @@ if ($_GET['action'] == 'delete') {
                 </div>
             </div>
             <div class="order_and_price">
-                <div class="order_form">
-                    <h4>SHIPPING ADDRESS</h4>
+                <form method="post" class="order_form" action="?action=order">
+                    <h4>Confirm order</h4>
                     <label>
-                        <input type="text" placeholder="Bangladesh">
+                        <input type="text" placeholder="Name" name="name">
                     </label>
                     <label>
-                        <input type="text" placeholder="State">
+                        <input type="number" placeholder="Phone" name="phone">
                     </label>
-                    <label>
-                        <input type="text" placeholder="Postcode / Zip">
-                    </label>
-                    <div class="">
-                        <button class="get_quote" onclick="location.href='cart.html'">GET A QUOTE</button>
+                    <!--                    <label>-->
+                    <!--                        <input type="text" placeholder="Postcode / Zip">-->
+                    <!--                    </label>-->
+                    <!--                    <div class="">-->
+                    <!--                        <button class="get_quote"-->
+                    <!--                                onclick="location.href='cart.html'"-->
+                    <!--                        type="submit">GET A QUOTE</button>-->
+                    <!--                    </div>-->
+                    <div class="total_price">
+                        <h5>SUB TOTAL $ <?= $sum['total'] ?></h5>
+                        <h4>GRAND TOTAL <span>$ <?= $sum['total'] ?></span></h4>
+                        <div class="proceed_button">
+                            <button class="proceed" type="submit">PROCEED TO CHECKOUT</button>
+                        </div>
                     </div>
-                </div>
-                <div class="total_price">
-                    <h5>SUB TOTAL $ <?= $sum['total'] ?></h5>
-                    <h4>GRAND TOTAL <span>$ <?= $sum['total'] ?></span></h4>
-                    <div class="proceed_button">
-                        <button class="proceed" onclick="location.href='cart.html'">PROCEED TO CHECKOUT</button>
-                    </div>
-                </div>
+                </form>
                 <?php else: ?>
                     <h2 style="padding-top: 100px; color: #F16D7F">Ваша корзина пуста!</h2>
                 <?php endif ?>
