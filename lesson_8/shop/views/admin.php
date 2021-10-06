@@ -24,8 +24,8 @@
             <h2>Admin page</h2>
         </div>
     </section>
-    <?php foreach ($orders as $order) : ?>
-        <div class="product_in_cart">
+    <div class="product_in_cart">
+        <?php foreach ($orders as $order) : ?>
             <div class="description">
                 <h3><?= $order['name'] ?></h3>
                 <h3><?= $order['phone'] ?></h3>
@@ -35,8 +35,15 @@
                     <i class="far fa-window-close product-close"></i>
                 </a>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+        <?php foreach ($totalRes as $sum) : ?>
+            <div class="product_in_cart">
+                <div class="description">
+                    <h5>TOTAL $ <?= $sum['total'] ?></h5>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
     <footer>
         <?php include 'templates/footer.php' ?>
     </footer>
