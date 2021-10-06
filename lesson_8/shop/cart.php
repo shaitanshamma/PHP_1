@@ -27,7 +27,8 @@ if ($_GET['action'] == 'delete') {
 if ($_GET['action'] == 'order') {
     $name = htmlspecialchars(strip_tags(mysqli_real_escape_string($db, $_POST['name'])));
     $phone = htmlspecialchars(strip_tags(mysqli_real_escape_string($db, $_POST['phone'])));
-    $sql = "INSERT INTO `orders`(`name`, `phone`, `session_uid`) VALUES ('{$name}','{$phone}','{$session_uid}')";
+    $summ = (float)$sum['total'];
+    $sql = "INSERT INTO `orders`(`name`, `phone`, `session_uid`, `total`) VALUES ('{$name}','{$phone}','{$session_uid}','{$summ}')";
     session_regenerate_id();
     mysqli_query($db, $sql);
     $_SESSION['message'] = "Заказ успешно оформлен";

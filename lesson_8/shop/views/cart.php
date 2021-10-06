@@ -67,14 +67,6 @@
                     <label>
                         <input type="number" placeholder="Phone" name="phone">
                     </label>
-                    <!--                    <label>-->
-                    <!--                        <input type="text" placeholder="Postcode / Zip">-->
-                    <!--                    </label>-->
-                    <!--                    <div class="">-->
-                    <!--                        <button class="get_quote"-->
-                    <!--                                onclick="location.href='cart.html'"-->
-                    <!--                        type="submit">GET A QUOTE</button>-->
-                    <!--                    </div>-->
                     <div class="total_price">
                         <h5>SUB TOTAL $ <?= $sum['total'] ?></h5>
                         <h4>GRAND TOTAL <span>$ <?= $sum['total'] ?></span></h4>

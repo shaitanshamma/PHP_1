@@ -24,26 +24,29 @@
             <h2>Admin page</h2>
         </div>
     </section>
-    <div class="product_in_cart">
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
         <?php foreach ($orders as $order) : ?>
-            <div class="description">
-                <h3><?= $order['name'] ?></h3>
-                <h3><?= $order['phone'] ?></h3>
-                <h3><?= $order['date'] ?></h3>
-                <h5>TOTAL $ <?= $sum['total'] ?></h5>
-                <a href="?action=delete&id=<?= $order['id'] ?>" class="close_prd">
-                    <i class="far fa-window-close product-close"></i>
-                </a>
-            </div>
+            <tr>
+                <td><?= $order['id'] ?></td>
+                <td><?= $order['name'] ?></td>
+                <td><?= $order['phone'] ?></td>
+                <td><?= $order['date'] ?></td>
+                <td><?= $order['total'] ?></td>
+                <td><a href="?action=delete&id=<?= $order['id'] ?>" style="color: red">
+                        DELETE
+                    </a>
+                </td>
+            </tr>
         <?php endforeach; ?>
-        <?php foreach ($totalRes as $sum) : ?>
-            <div class="product_in_cart">
-                <div class="description">
-                    <h5>TOTAL $ <?= $sum['total'] ?></h5>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
+    </table>
     <footer>
         <?php include 'templates/footer.php' ?>
     </footer>

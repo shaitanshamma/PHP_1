@@ -8,8 +8,8 @@ if (isAdmin($_SESSION['login'])) {
     define('SRC', 'img/');
     $session_uid = session_id();
 
-    $total = "select sum(quant * price) as total from cart join products on products.id = cart.prod_id join orders on orders.session_uid = cart.session_uid; ";
-    $totalRes = mysqli_query($db, $total);
+//    $total = "select sum(quant * price) as total from cart join products on products.id = cart.prod_id join orders on orders.session_uid = cart.session_uid; ";
+//    $totalRes = mysqli_query($db, $total);
 //    $sum = mysqli_fetch_assoc($totalRes);
 
 if ($_GET['action'] == 'delete') {
